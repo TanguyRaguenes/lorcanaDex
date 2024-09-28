@@ -21,7 +21,7 @@ public class CardsController {
     @ResponseBody
     public List<Card> getCards(Model model) {
 
-        String url = "https://api.lorcana-api.com/cards/all?pagesize=10&page=1";
+        String url = "https://api.lorcana-api.com/cards/all?pagesize=12&page=1&lang=fr";
 
         Flux<Card> cardsFlux = builder.build()
                 .get()
@@ -46,6 +46,13 @@ public class CardsController {
         System.out.println("--------------------------------------");
 
         return cardsList;
+    }
+
+    @GetMapping("/show-cards-list")
+    public String showCardsList() {
+
+        return ("/cards-list");
+
     }
 
 }

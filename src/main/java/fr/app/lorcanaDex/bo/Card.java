@@ -36,7 +36,7 @@ public class Card {
     @JsonProperty("Artist")
     private String artist;
     @JsonProperty("Set_Name")
-    private String setName;
+    private String lorcanaSetName;
     @JsonProperty("Classifications")
     private String classifications;
     @JsonProperty("Date_Added")
@@ -86,12 +86,13 @@ public class Card {
         super();
     }
 
-    public Card(String artist, String setName, String classifications, String dateAdded, Long setNum, String color,
+    public Card(String artist, String lorcanaSetName, String classifications, String dateAdded, Long setNum,
+            String color,
             String gamemode, String franchise, String image, Long cost, boolean inkable, String name, String type,
             Long lore, String rarity, String flavorText, String uniqueId, Long cardNum, String bodyText, Long willpower,
             String cardVariants, String dateModified, Long strength, String setId) {
         this.artist = artist;
-        this.setName = setName;
+        this.lorcanaSetName = lorcanaSetName;
         this.classifications = classifications;
         this.dateAdded = dateAdded;
         this.setNum = setNum;
@@ -124,12 +125,12 @@ public class Card {
         this.artist = artist;
     }
 
-    public String getSetName() {
-        return setName;
+    public String getLorcanaSetName() {
+        return lorcanaSetName;
     }
 
-    public void setSetName(String setName) {
-        this.setName = setName;
+    public void setLorcanaSetName(String lorcanaSetName) {
+        this.lorcanaSetName = lorcanaSetName;
     }
 
     public String getClassifications() {
@@ -310,7 +311,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Card [artist=" + artist + ", setName=" + setName + ", classifications=" + classifications
+        return "Card [artist=" + artist + ", setName=" + lorcanaSetName + ", classifications=" + classifications
                 + ", dateAdded=" + dateAdded + ", setNum=" + setNum + ", color=" + color + ", gamemode=" + gamemode
                 + ", franchise=" + franchise + ", image=" + image + ", cost=" + cost + ", inkable=" + inkable
                 + ", name=" + name + ", type=" + type + ", lore=" + lore + ", rarity=" + rarity + ", flavorText="

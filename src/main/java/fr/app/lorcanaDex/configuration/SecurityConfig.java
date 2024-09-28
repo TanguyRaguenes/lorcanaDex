@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .requestMatchers("/get-cards").authenticated()
                         .requestMatchers("/api/cards").authenticated()
                         .requestMatchers("/show-home").authenticated()
+                        .requestMatchers("/show-cards-list").authenticated()
 
                         // .requestMatchers("/test").hasAuthority("ROLE_EMPLOYE")
                         // .requestMatchers("/test").hasAnyAuthority("ROLE_EMPLOYE","ROLE_FORMATEUR")
@@ -47,7 +48,8 @@ public class SecurityConfig {
                         // .requestMatchers(HttpMethod.POST,"/test").hasAnyAuthority("ROLE_EMPLOYE","ROLE_FORMATEUR")
 
                         // Pour que notre css puisse s'exécuter
-                        // .requestMatchers("/vendor/**").permitAll()
+                        .requestMatchers("/css/**").permitAll()
+                        .requestMatchers("/ts/**").permitAll()
 
                         // Pour indiquer que toutes les URL qui commencent par :
                         // .requestMatchers("/show-aliment/**").hasAuthority("FORMATEUR")
