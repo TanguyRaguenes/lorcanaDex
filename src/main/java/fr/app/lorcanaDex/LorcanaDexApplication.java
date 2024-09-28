@@ -1,4 +1,4 @@
-package fr.app.lorcanaDex.lorcanaDex;
+package fr.app.lorcanaDex;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
