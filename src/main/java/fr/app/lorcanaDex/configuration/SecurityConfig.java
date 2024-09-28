@@ -3,12 +3,12 @@ package fr.app.lorcanaDex.configuration;
 import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+// import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+// import org.springframework.security.core.Authentication;
+// import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -34,23 +34,17 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((authorize) -> authorize
 
-                        .requestMatchers("/").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/").authenticated()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/logout").authenticated()
+                        .requestMatchers("/get-cards").authenticated()
+                        .requestMatchers("/api/cards").authenticated()
+                        .requestMatchers("/show-home").authenticated()
 
-                        // .requestMatchers("/chocolatine").hasAuthority("ROLE_EMPLOYE")
-                        // //Ou .requestMatchers("/chocolatine").hasRole("EMPLOYE")
-                        // .requestMatchers("/show-aliments").hasAuthority("ROLE_FORMATEUR")
-                        // .requestMatchers("/show-aliment/{id}").hasAuthority("ROLE_FORMATEUR")
-                        // .requestMatchers("/demo-debug").hasAnyAuthority("ROLE_EMPLOYE",
-                        // "ROLE_FORMATEUR", "ROLE_ADMIN")
-                        // .requestMatchers(HttpMethod.GET,"/show-aliment-form").hasAnyAuthority("ROLE_EMPLOYE",
-                        // "ROLE_FORMATEUR")
-                        // .requestMatchers(HttpMethod.POST,"/aliment-form").hasAnyAuthority("ROLE_EMPLOYE",
-                        // "ROLE_FORMATEUR")
-                        // .requestMatchers("/show-basket-1").hasAuthority("ROLE_ADMIN")
-                        // .requestMatchers("/show-basket-2").hasAuthority("ROLE_ADMIN")
-                        // .requestMatchers("/clear-basket").hasAuthority("ROLE_ADMIN")
+                        // .requestMatchers("/test").hasAuthority("ROLE_EMPLOYE")
+                        // .requestMatchers("/test").hasAnyAuthority("ROLE_EMPLOYE","ROLE_FORMATEUR")
+                        // .requestMatchers(HttpMethod.GET,"/test").hasAnyAuthority("ROLE_EMPLOYE","ROLE_FORMATEUR")
+                        // .requestMatchers(HttpMethod.POST,"/test").hasAnyAuthority("ROLE_EMPLOYE","ROLE_FORMATEUR")
 
                         // Pour que notre css puisse s'exécuter
                         // .requestMatchers("/vendor/**").permitAll()
@@ -59,11 +53,9 @@ public class SecurityConfig {
                         // .requestMatchers("/show-aliment/**").hasAuthority("FORMATEUR")
 
                         .anyRequest().denyAll()
-                // -> rejette toutes les requêtes non configurées
 
                 // On pourrait aussi faire :
                 // .anyRequest().authenticated()
-                // -> accepte toutes les requêtes non configurées
 
                 );
 
