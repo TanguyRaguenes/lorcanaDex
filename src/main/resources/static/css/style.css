@@ -1,15 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 h1 {
     color: orange;
 }
 
-#cardsContainer {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    border: black 1px solid;
-    height: 80%;
-    width: 80%;
+body {
 
+    border: 1px blue solid;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .card {
@@ -22,4 +27,50 @@ h1 {
 .card img {
     height: 80%;
     width: 80%;
+}
+
+#cardsContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: black 1px solid;
+    height: 80%;
+    width: 80%;
+
+}
+
+#buttonsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    height: 5%;
+    border: 1px black solid;
+}
+
+.button {
+    height: 100%;
+    font-size: 4rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.button:hover {
+    font-size: 4.5rem;
+    color: gray;
+    cursor: pointer;
+}
+
+
+.material-symbols-rounded {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 700,
+        'GRAD' 200,
+        'opsz' 48
 }

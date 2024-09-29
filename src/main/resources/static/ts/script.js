@@ -9,21 +9,35 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { Card } from "./bo/Card.js";
 const cardsContainer = document.getElementById("cardsContainer");
-function main() {
+const previousPage = document.getElementById("previousPage");
+const nextPage = document.getElementById("nextPage");
+let page = 1;
+previousPage.addEventListener("click", () => {
+    console.log("previousPage");
+    page -= 1;
+    page < 1 ? page = 1 : null;
+    main(page);
+});
+nextPage.addEventListener("click", () => {
+    console.log("nextPage");
+    page += 1;
+    main(page);
+});
+function main(pageNumber) {
     return __awaiter(this, void 0, void 0, function* () {
-        const cards = yield fetchCards();
+        const cards = yield fetchCards(pageNumber);
         cards.forEach(card => {
             console.log(card);
         });
         designCards(cards);
     });
 }
-function fetchCards() {
+function fetchCards(pageNumber) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("fetchCards");
         let cards = [];
         try {
-            const response = yield fetch("/api/cards");
+            const response = yield fetch("/api/cards/" + pageNumber);
             if (!response.ok) {
                 console.log(console.error("Erreur lors de la récupération des cartes :", response.statusText));
                 return cards;
@@ -42,6 +56,7 @@ function fetchCards() {
 }
 function designCards(cards) {
     console.log("designCards");
+    cardsContainer.innerHTML = "";
     cards.forEach(card => {
         cardsContainer === null || cardsContainer === void 0 ? void 0 : cardsContainer.insertAdjacentHTML("beforeend", `
         
@@ -58,4 +73,4 @@ function designCards(cards) {
             `);
     });
 }
-main();
+main(1);

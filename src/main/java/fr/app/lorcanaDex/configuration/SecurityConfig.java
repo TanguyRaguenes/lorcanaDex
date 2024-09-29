@@ -39,6 +39,7 @@ public class SecurityConfig {
                         .requestMatchers("/logout").authenticated()
                         .requestMatchers("/get-cards").authenticated()
                         .requestMatchers("/api/cards").authenticated()
+                        .requestMatchers("/api/cards/{pageNumber}").authenticated()
                         .requestMatchers("/show-home").authenticated()
                         .requestMatchers("/show-cards-list").authenticated()
 

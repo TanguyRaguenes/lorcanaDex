@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -17,11 +18,17 @@ public class CardsController {
 
     WebClient.Builder builder = WebClient.builder();
 
-    @GetMapping("/api/cards")
+    @GetMapping("/api/cards/{pageNumber}")
     @ResponseBody
-    public List<Card> getCards(Model model) {
+    public List<Card> getCards(@PathVariable(name = "pageNumber", required = false) Long pageNumber) {
 
-        String url = "https://api.lorcana-api.com/cards/all?pagesize=12&page=1&lang=fr";
+        if (pageNumber == null) {
+            pageNumber = 1L;
+        }
+
+        String url = "https://api.lorcana-api.com/cards/all?pagesize=12&page=" + pageNumber;
+
+        System.out.println(url);
 
         Flux<Card> cardsFlux = builder.build()
                 .get()
