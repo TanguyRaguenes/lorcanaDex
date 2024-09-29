@@ -11,36 +11,42 @@ import { Card } from "./bo/Card.js";
 const cardsContainer = document.getElementById("cardsContainer");
 const previousPage = document.getElementById("previousPage");
 const nextPage = document.getElementById("nextPage");
+const modal = document.getElementById("modal");
+const main = document.querySelector("main");
 let page = 1;
+let cards = [];
+modal.addEventListener("click", () => {
+    modal.style.visibility = "hidden";
+    main.style.filter = "none";
+});
 previousPage.addEventListener("click", () => {
     console.log("previousPage");
     page -= 1;
     page < 1 ? page = 1 : null;
-    main(page);
+    mainFunction(page);
 });
 nextPage.addEventListener("click", () => {
     console.log("nextPage");
     page += 1;
-    main(page);
+    mainFunction(page);
 });
-function main(pageNumber) {
+function mainFunction(pageNumber) {
     return __awaiter(this, void 0, void 0, function* () {
-        const cards = yield fetchCards(pageNumber);
+        yield fetchCards(pageNumber);
         cards.forEach(card => {
             console.log(card);
         });
-        designCards(cards);
+        designCards();
     });
 }
 function fetchCards(pageNumber) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("fetchCards");
-        let cards = [];
+        cards = [];
         try {
             const response = yield fetch("/api/cards/" + pageNumber);
             if (!response.ok) {
                 console.log(console.error("Erreur lors de la récupération des cartes :", response.statusText));
-                return cards;
             }
             const jsonResponse = yield response.json();
             jsonResponse.forEach((element) => {
@@ -51,26 +57,37 @@ function fetchCards(pageNumber) {
         catch (error) {
             console.error('Erreur:', error);
         }
-        return cards;
     });
 }
-function designCards(cards) {
+function designCards() {
     console.log("designCards");
     cardsContainer.innerHTML = "";
-    cards.forEach(card => {
+    for (let i = 0; i < cards.length; i++) {
         cardsContainer === null || cardsContainer === void 0 ? void 0 : cardsContainer.insertAdjacentHTML("beforeend", `
         
-            <div class="card">
-            
-            <p>${card.getName()}</p>
+            <div id="${i}" class="card">
+                
+                
+                <img src="${cards[i].getImage()}" alt="">
 
-            <img src="${card.getImage()}" alt="">
             
             </div>
 
     
             
             `);
-    });
+    }
+    const cardsCreated = document.getElementsByClassName("card");
+    for (let i = 0; i < cardsCreated.length; i++) {
+        cardsCreated[i].addEventListener("click", () => {
+            console.log(cardsCreated[i].id);
+            modal.innerHTML = "";
+            modal.insertAdjacentHTML('afterbegin', `
+                <img src="${cards[Number(cardsCreated[i].id)].getImage()}" alt="">
+            `);
+            modal.style.visibility = "visible";
+            main.style.filter = "blur(8px)";
+        });
+    }
 }
-main(1);
+mainFunction(1);
