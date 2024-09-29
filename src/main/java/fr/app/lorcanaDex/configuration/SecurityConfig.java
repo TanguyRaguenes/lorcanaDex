@@ -42,6 +42,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/cards/{pageNumber}").authenticated()
                         .requestMatchers("/show-home").authenticated()
                         .requestMatchers("/show-cards-list").authenticated()
+                        .requestMatchers("/bulk-data").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/get-cards").authenticated()
+                        .requestMatchers("/get-cards/{filterKey}/{filterValue}").authenticated()
 
                         // .requestMatchers("/test").hasAuthority("ROLE_EMPLOYE")
                         // .requestMatchers("/test").hasAnyAuthority("ROLE_EMPLOYE","ROLE_FORMATEUR")

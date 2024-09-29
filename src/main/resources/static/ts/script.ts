@@ -7,40 +7,42 @@ const previousPage = document.getElementById("previousPage") as HTMLSpanElement;
 const nextPage = document.getElementById("nextPage") as HTMLSpanElement;
 const modal = document.getElementById("modal") as HTMLDivElement;
 
+const h1 = document.querySelector("h1") as HTMLElement;
+
 const main = document.querySelector("main") as HTMLDivElement;
 
 let page: number = 1;
+let nbCardsPerPage: number = 12;
 let cards: Array<Card> = [];
-
-modal.addEventListener("click", () => {
-    modal.style.visibility = "hidden"
-    main.style.filter = "none"
-})
 
 previousPage.addEventListener("click", () => {
     console.log("previousPage")
     page -= 1;
     page < 1 ? page = 1 : null;
-    mainFunction(page);
+    mainFunction();
 })
 
 nextPage.addEventListener("click", () => {
     console.log("nextPage")
     page += 1;
-    mainFunction(page);
+    mainFunction();
 })
 
-async function mainFunction(pageNumber: number): Promise<void> {
+async function mainFunction(): Promise<void> {
 
-    await fetchCards(pageNumber);
+    await fetchCards("rarity", "Legendary");
     cards.forEach(card => {
         console.log(card);
     })
     designCards();
 
+    h1.innerHTML = `Cards' list : ${cards.length} cards`
+
+
+
 }
 
-async function fetchCards(pageNumber: number): Promise<void> {
+async function fetchCards<T>(filterKey: String, filterValue: T): Promise<void> {
 
     console.log("fetchCards")
 
@@ -48,8 +50,9 @@ async function fetchCards(pageNumber: number): Promise<void> {
 
     try {
 
-        const response = await fetch("/api/cards/" + pageNumber);
+        // const response = await fetch("/api/cards/" + page);
 
+        const response = await fetch(`/get-cards/${filterKey}/${filterValue}`);
 
         if (!response.ok) {
             console.log(console.error("Erreur lors de la récupération des cartes :", response.statusText));
@@ -104,16 +107,14 @@ function designCards(): void {
     cardsContainer.innerHTML = "";
 
 
-    for (let i = 0; i < cards.length; i++) {
+    for (let i = (page - 1) * 11; i < (page - 1) * 11 + 12; i++) {
 
         cardsContainer?.insertAdjacentHTML("beforeend", `
         
             <div id="${i}" class="card">
                 
-                
                 <img src="${cards[i].getImage()}" alt="">
 
-            
             </div>
 
     
@@ -128,15 +129,41 @@ function designCards(): void {
     for (let i = 0; i < cardsCreated.length; i++) {
 
         cardsCreated[i].addEventListener("click", () => {
-            console.log(cardsCreated[i].id);
 
             modal.innerHTML = "";
             modal.insertAdjacentHTML('afterbegin', `
+
+                <span id="close" class="material-symbols-rounded button">close</span>
+
                 <img src="${cards[Number(cardsCreated[i].id)].getImage()}" alt="">
+                <div id="modalBtnContainer">
+                    <span id="favorite" class="material-symbols-rounded button">favorite</span>
+                    <span id="add" class="material-symbols-rounded button">add</span>
+                </div>
+
             `)
             modal.style.visibility = "visible";
-
             main.style.filter = "blur(8px)"
+            main.style.pointerEvents = "none";
+
+            const close = document.getElementById("close") as HTMLSpanElement;
+            const favorite = document.getElementById("favorite") as HTMLSpanElement;
+            const add = document.getElementById("add") as HTMLSpanElement;
+
+            close.addEventListener("click", () => {
+                console.log("close");
+                modal.style.visibility = "hidden"
+                main.style.filter = "none"
+                main.style.pointerEvents = "auto";
+            })
+
+            favorite.addEventListener("click", () => {
+                console.log("favorite");
+            })
+
+            add.addEventListener("click", () => {
+                console.log("add");
+            })
 
         })
 
@@ -144,4 +171,4 @@ function designCards(): void {
 
 }
 
-mainFunction(1)
+mainFunction();
