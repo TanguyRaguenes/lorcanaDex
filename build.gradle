@@ -39,5 +39,5 @@ tasks.named('test') {
 }
 
 springBoot {
-    mainClass = 'fr.app.LorcanaDex'
+    mainClass = 'fr.app.LorcanaDex' // Remplace par le nom de ta classe principale
 }
