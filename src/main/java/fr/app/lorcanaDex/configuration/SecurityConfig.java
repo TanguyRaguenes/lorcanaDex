@@ -42,6 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/cards/{pageNumber}").authenticated()
                         .requestMatchers("/show-home").authenticated()
                         .requestMatchers("/show-cards-list").permitAll()
+                        .requestMatchers("/show-decks").permitAll()
                         .requestMatchers("/bulk-data").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/get-cards").authenticated()
                         .requestMatchers("/get-cards/{filterKey}/{filterValue}").authenticated()

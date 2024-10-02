@@ -101,4 +101,11 @@ public class CardsController {
 
     }
 
+    @GetMapping("/show-decks")
+    public String showDecks() {
+
+        return ("/decks-list");
+
+    }
+
 }
