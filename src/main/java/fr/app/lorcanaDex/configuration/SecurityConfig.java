@@ -41,7 +41,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/cards").authenticated()
                         .requestMatchers("/api/cards/{pageNumber}").authenticated()
                         .requestMatchers("/show-home").authenticated()
-                        .requestMatchers("/show-cards-list").authenticated()
+                        .requestMatchers("/show-cards-list").permitAll()
                         .requestMatchers("/bulk-data").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/get-cards").authenticated()
                         .requestMatchers("/get-cards/{filterKey}/{filterValue}").authenticated()
@@ -58,10 +58,10 @@ public class SecurityConfig {
                         // Pour indiquer que toutes les URL qui commencent par :
                         // .requestMatchers("/show-aliment/**").hasAuthority("FORMATEUR")
 
-                        .anyRequest().denyAll()
+                        // .anyRequest().denyAll()
 
-                // On pourrait aussi faire :
-                // .anyRequest().authenticated()
+                        // On pourrait aussi faire :
+                        .anyRequest().authenticated()
 
                 );
 
